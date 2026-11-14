@@ -43,6 +43,10 @@ public class MessageServer extends Service {
     private final Runnable hideDrawing = this::hideDrawing;
 
     static void start(Context c) {
+        if (!BuildConfig.PHONE_PAGE) {   // switched off in gradle.properties: make sure an old one is stopped too
+            c.stopService(new Intent(c, MessageServer.class));
+            return;
+        }
         try {
             c.startForegroundService(new Intent(c, MessageServer.class));
         } catch (Exception ignored) {

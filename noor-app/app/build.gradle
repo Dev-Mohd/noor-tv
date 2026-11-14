@@ -7,11 +7,14 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 34
-        versionCode 5
+        versionCode 7
         versionName '1.0'
         buildConfigField 'double', 'LAT', project.property('noor.lat')
         buildConfigField 'double', 'LON', project.property('noor.lon')
         buildConfigField 'int', 'METHOD', project.property('noor.method')
+        buildConfigField 'boolean', 'PHONE_PAGE', project.property('noor.phonePage')
+        // A second video for the evening (after 15:00); empty = always VIDEO.
+        buildConfigField 'String', 'VIDEO_EVENING', '""'
     }
 
     // One small app per shortcut, so each gets its own tile on the home screen.
@@ -28,14 +31,15 @@ android {
             dimension 'item'
             applicationId 'app.noortv.baqara'
             resValue 'string', 'app_name', 'سورة البقرة'
-            buildConfigField 'String', 'VIDEO', '"9HW7j9lZZTU"'
+            buildConfigField 'String', 'VIDEO', '"Px5RD0Ehqxw"' // Maher Al-Muaiqly, official channel
             buildConfigField 'boolean', 'REMINDERS', 'false'
         }
         sabah {
             dimension 'item'
             applicationId 'app.noortv.sabah'
-            resValue 'string', 'app_name', 'أذكار الصباح'
+            resValue 'string', 'app_name', 'أذكار الصباح والمساء'
             buildConfigField 'String', 'VIDEO', '"fD4uDIoCn3M"'
+            buildConfigField 'String', 'VIDEO_EVENING', '"rQnNno3Do60"'
             buildConfigField 'boolean', 'REMINDERS', 'false'
         }
         masa {

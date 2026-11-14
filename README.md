@@ -15,6 +15,8 @@
 
 **[⬇️ ابدأ الحين، 3 خطوات بس](#start)**
 
+نسخة خالد القحطاني ([@kdqhtani](https://github.com/kdqhtani))، مبنية على [نور تي في](https://github.com/majedphotos/noor-tv) الأصلي.
+
 </div>
 
 <div dir="rtl">
@@ -85,7 +87,7 @@
 **1. افتح كلود كود والصق هالسطر:**
 
 ```
-نظّف تلفزيوني بـ github.com/majedphotos/noor-tv واقرا skills/noor-tv/SKILL.md وامشِ عليه خطوة خطوة
+نظّف تلفزيوني بـ github.com/kdqhtani/noor-tv واقرا skills/noor-tv/SKILL.md وامشِ عليه خطوة خطوة
 ```
 
 **2. سوّ اللي يقول لك.** خطوة وحدة بكل مرة. الشي الوحيد اللي تسويه بإيدك: تضغط 7 مرات بإعدادات التلفزيون عشان تفعّل «خيارات المطوّر»، وكلود يقول لك وين بالضبط.
@@ -96,7 +98,7 @@
 <summary>تبيه كبلقن بكلود كود؟</summary>
 
 ```
-/plugin marketplace add majedphotos/noor-tv
+/plugin marketplace add kdqhtani/noor-tv
 /plugin install noor-tv@noor-tv
 ```
 
@@ -116,3 +118,16 @@
 مواقيت الصلاة والتاريخ الهجري من [Aladhan](https://aladhan.com)، والطقس من [Open-Meteo](https://open-meteo.com).
 
 </div>
+
+<div dir="rtl">
+
+## وش الجديد بنسخة خالد؟
+
+- خلفية من الرياض تتغير مع الوقت والطقس (صحو، غيم، مطر، غبار).
+- مواقيت الصلاة والساعة بنظام 12 ساعة (ص/م).
+- سورة البقرة بصوت الشيخ ماهر المعيقلي من الحرم.
+- أذكار الصباح والمساء بكرت واحد يتغير مع الوقت.
+- تقدر تقفل صفحة الجوال من `noor.phonePage=false`.
+
+</div>
+

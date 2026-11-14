@@ -27,6 +27,8 @@ final class Noor {
 
     private static volatile String weather = "";
     private static volatile long weatherAt;
+    /** "clear", "cloudy", "rain" or "dust" for wallpaper_moods' "<time>-<kind>" groups; "" until known. */
+    private static volatile String weatherKind = "";
     private static volatile int[] prayerMinutes; // minutes after midnight, Fajr..Isha
     private static volatile int prayerDay = -1;
     private static volatile boolean fetching;
@@ -132,13 +134,37 @@ final class Noor {
     private static void loadWeather() {
         try {
             JSONObject cur = new JSONObject(get("https://api.open-meteo.com/v1/forecast?latitude=" + LAT
-                    + "&longitude=" + LON + "&current=temperature_2m,weather_code,is_day&timezone=auto"))
+                    + "&longitude=" + LON + "&current=temperature_2m,weather_code,is_day,visibility&timezone=auto"))
                     .getJSONObject("current");
             long t = Math.round(cur.getDouble("temperature_2m"));
-            weather = icon(cur.getInt("weather_code"), cur.optInt("is_day", 1) == 1) + " " + t + "°";
+            int code = cur.getInt("weather_code");
+            double dust = 0;
+            try {
+                dust = new JSONObject(get("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + LAT
+                        + "&longitude=" + LON + "&current=dust")).getJSONObject("current").optDouble("dust", 0);
+            } catch (Exception ignored) {
+                // no dust reading: judge by visibility alone
+            }
+            double visibility = cur.optDouble("visibility", 99999);
+            weatherKind = kind(code, dust, visibility);
+            weather = ("dust".equals(weatherKind) ? "🌫️" : icon(code, cur.optInt("is_day", 1) == 1)) + " " + t + "°";
             weatherAt = System.currentTimeMillis();
         } catch (Exception ignored) {
         }
+    }
+
+    /** The wallpaper's weather: rain first, then dust, then clouds. Dust needs a shortened view as well: the dust model
+     *  alone reads thousands of µg/m³ over Riyadh on days the sky is clear. */
+    static String kind(int code, double dust, double visibility) {
+        if (code >= 51) return "rain";
+        boolean fog = code == 45 || code == 48;
+        if (!fog && (visibility < 5000 || (dust >= 300 && visibility < 10000))) return "dust";
+        if (code == 3 || code == 45 || code == 48) return "cloudy";
+        return "clear";
+    }
+
+    static String weatherKind() {
+        return weatherKind;
     }
 
     /** WMO weather code to one symbol. */

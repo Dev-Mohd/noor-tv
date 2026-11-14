@@ -1,6 +1,6 @@
 {
   "name": "noor-tv",
-  "owner": { "name": "majedphotos" },
+  "owner": { "name": "Khalid Alqahtani (kdqhtani)" },
   "plugins": [
     { "name": "noor-tv", "source": "./", "description": "نظّف تلفزيونك وخلّه يأذّن ويذكّرك بالصلاة", "version": "1.1.2" }
   ]
