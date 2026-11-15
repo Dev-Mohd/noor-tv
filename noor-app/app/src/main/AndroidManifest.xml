@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!-- The adhan must fire on the minute. Android 14 denies SCHEDULE_EXACT_ALARM by default,
+         so 13+ uses USE_EXACT_ALARM (granted at install); 12 and 12L use SCHEDULE_EXACT_ALARM. -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
     <!-- Granted with appops over adb, to tell the home screen from a film before playing the adhan. -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
         xmlns:tools="http://schemas.android.com/tools" tools:ignore="ProtectedPermissions" />

@@ -76,7 +76,15 @@ public class Adhan extends BroadcastReceiver {
         Intent fire = new Intent(c, Adhan.class).setAction(FIRE).putExtra("p", prayer);
         PendingIntent pi = PendingIntent.getBroadcast(c, 1, fire,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        c.getSystemService(AlarmManager.class).setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, when, pi);
+        AlarmManager am = c.getSystemService(AlarmManager.class);
+        boolean exact = android.os.Build.VERSION.SDK_INT < 31 || am.canScheduleExactAlarms();
+        try {
+            if (exact) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, when, pi);
+            else am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, when, pi);
+        } catch (SecurityException e) {
+            // No exact-alarm permission: a late adhan is better than none.
+            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, when, pi);
+        }
     }
 
     /** "HH:mm" for Fajr..Isha on that day, from Aladhan (noor.method), cached per day for offline days. */
