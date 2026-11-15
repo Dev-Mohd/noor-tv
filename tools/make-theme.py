@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """Builds a theme folder ready for CleanYourTV's tools/theme.sh: the shape (themes/<name>) on top of the
 base dock (theme/config.json), plus this TV's remote keys.
-Usage: tools/make-theme.py <zakhrafa|masjid-layl|awqat|plain> <out-folder> [brand-example-config.json]"""
+Usage: tools/make-theme.py <jacaranda|zakhrafa|masjid-layl|awqat|plain|default> <out-folder> [brand-example-config.json]
+"default" is jacaranda, the base theme of this version."""
 import json, os, shutil, sys
 
+DEFAULT_THEME = "jacaranda"
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 name, out = sys.argv[1], sys.argv[2]
+if name == "default":
+    name = DEFAULT_THEME
 config = json.load(open(f"{root}/theme/config.json", encoding="utf8"))
 shutil.rmtree(out, ignore_errors=True)
 if name == "plain":
